@@ -17,6 +17,25 @@ if [ ! -f ./zotero ]; then
   rm zotero.tar.bz2
 fi
 
+# Renomear pastas dentro de "storage" para o nome do arquivo PDF contido nelas
+STORAGE_DIR="./storage"
+if [ -d "$STORAGE_DIR" ]; then
+  for folder in "$STORAGE_DIR"/*; do
+    if [ -d "$folder" ]; then
+      pdf_file=$(find "$folder" -maxdepth 1 -type f -name "*.pdf" | head -n 1)
+      if [ -n "$pdf_file" ]; then
+        pdf_name=$(basename "$pdf_file" .pdf)
+        parent_dir=$(dirname "$folder")
+        new_folder="$parent_dir/$pdf_name"
+        if [ "$folder" != "$new_folder" ]; then
+          mv "$folder" "$new_folder"
+          echo "Renomeado: $folder -> $new_folder"
+        fi
+      fi
+    fi
+  done
+fi
+
 # Buscar por atualizações no repositório remoto
 git pull
 
@@ -31,3 +50,4 @@ if [[ `git status --porcelain` ]]; then
   git commit -m "atualiza dados"
   git push
 fi
+
