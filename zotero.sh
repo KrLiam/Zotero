@@ -17,6 +17,12 @@ if [ ! -f ./zotero ]; then
   rm zotero.tar.bz2
 fi
 
+# Buscar por atualizações no repositório remoto
+git pull
+
+# Executar Zotero
+./zotero
+
 # Renomear pastas dentro de "storage" para o nome do arquivo PDF contido nelas
 STORAGE_DIR="./storage"
 if [ -d "$STORAGE_DIR" ]; then
@@ -35,12 +41,6 @@ if [ -d "$STORAGE_DIR" ]; then
     fi
   done
 fi
-
-# Buscar por atualizações no repositório remoto
-git pull
-
-# Executar Zotero
-./zotero
 
 # Subir as mudanças para o GitHub
 if [[ `git status --porcelain` ]]; then
