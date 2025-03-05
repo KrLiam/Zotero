@@ -13,7 +13,7 @@ fi
 git pull
 
 # Executar Zotero
-./zotero
+./zotero --url $@ %U
 
 # Renomear pastas dentro de "storage" para o nome do arquivo PDF contido nelas
 #STORAGE_DIR="./storage"
